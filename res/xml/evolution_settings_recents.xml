@@ -31,4 +31,18 @@
                  android:targetPackage="com.android.settings"
                  android:targetClass="com.ion.ionizer.hideappfromrecents.HAFRAppListActivity" />
     </Preference>
+
+    <PreferenceCategory 
+        android:key="stock_recents"
+        android:title="@string/recents_default_category">
+
+        <com.crdroid.settings.preferences.SystemSettingListPreference
+            android:key="recents_clear_all_location"
+            android:icon="@drawable/ic_recents_clear_all"
+            android:title="@string/recents_clear_all_location_title"
+            android:entries="@array/recents_clear_all_location_entries"
+            android:entryValues="@array/recents_clear_all_location_values"
+            android:defaultValue="3"
+            android:dependency="show_clear_all_recents" />
+
 </PreferenceScreen>

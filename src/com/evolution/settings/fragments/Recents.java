@@ -24,6 +24,7 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.preference.Preference.OnPreferenceChangeListener;
 import android.support.v14.preference.SwitchPreference;
@@ -41,7 +42,10 @@ public class Recents extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {
 
     private static final String RECENTS_LAYOUT_STYLE_PREF = "recents_layout_style";
+    private static final String CATEGORY_STOCK = "stock_recents";
+
     private ListPreference mRecentsLayoutStylePref;
+    private PreferenceCategory stockCategory;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -49,15 +53,17 @@ public class Recents extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.ion_settings_recents);
 
+        final PreferenceScreen prefScreen = getPreferenceScreen();
+
         ContentResolver resolver = getActivity().getContentResolver();
 
         // recents layout style
         mRecentsLayoutStylePref = (ListPreference) findPreference(RECENTS_LAYOUT_STYLE_PREF);
-        int type = Settings.System.getInt(resolver,
-                Settings.System.RECENTS_LAYOUT_STYLE, 0);
-        mRecentsLayoutStylePref.setValue(String.valueOf(type));
-        mRecentsLayoutStylePref.setSummary(mRecentsLayoutStylePref.getEntry());
-        mRecentsLayoutStylePref.setOnPreferenceChangeListener(this);
+        int recentsStyle = Settings.System.getIntForUser(getContentResolver(),
+                Settings.System.RECENTS_COMPONENT, 0, UserHandle.USER_CURRENT);
+
+        stockCategory = (PreferenceCategory) prefScreen.findPreference(CATEGORY_STOCK);
+        stockCategory.setEnabled(recentsStyle == 1);
 
     }
 
@@ -70,9 +76,22 @@ public class Recents extends SettingsPreferenceFragment implements
                     Settings.System.RECENTS_LAYOUT_STYLE, type);
             mRecentsLayoutStylePref.setSummary(mRecentsLayoutStylePref.getEntries()[index]);
             IonUtils.showSystemUiRestartDialog(getContext());
+            stockCategory.setEnabled(value == 1);
             return true;
         }
         return false;
+    }
+
+    public static void reset(Context mContext) {
+        ContentResolver resolver = mContext.getContentResolver();
+        Settings.System.putIntForUser(resolver,
+                Settings.System.RECENTS_CLEAR_ALL_LOCATION, 3, UserHandle.USER_CURRENT);
+        Settings.System.putIntForUser(resolver,
+                Settings.System.RECENTS_COMPONENT, 0, UserHandle.USER_CURRENT);
+        Settings.System.putString(resolver,
+                Settings.System.RECENTS_ICON_PACK, "");
+        Settings.System.putIntForUser(resolver,
+                Settings.System.SHOW_CLEAR_ALL_RECENTS, 1, UserHandle.USER_CURRENT);
     }
 
     @Override
