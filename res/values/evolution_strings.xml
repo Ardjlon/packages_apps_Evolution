@@ -40,6 +40,7 @@
     <string name="qs_style_category">QS style</string>
     <string name="status_bar_items">Status bar items</string>
     <string name="system_category">System</string>
+    <string name="interface_title">Interface</string>
 
     <!-- Summaries -->
     <string name="buttons_summary">Tweak the actions of your devices physical buttons</string>
@@ -841,5 +842,12 @@
     <!-- Lockscreen battery info indicator  -->
     <string name="lockscreen_battery_info_title">Lockscreen charging info</string>
     <string name="lockscreen_battery_info_summary">Display negociated charger max current and voltage and battery temperature on lockscreen while charging</string>
+
+    <!-- Settings dashboard icon style -->
+    <string name="theming_settings_dashboard_icons_title">Dashboard icons</string>
+    <string name="theming_settings_dashboard_icons_default">Round</string>
+    <string name="theming_settings_dashboard_icons_default_accent">Round (Accent)</string>
+    <string name="theming_settings_dashboard_icons_plain">Oreo</string>
+    <string name="theming_settings_dashboard_icons_plain_accent">Oreo (Accent)</string>
 
 </resources>
