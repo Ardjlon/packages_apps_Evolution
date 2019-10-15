@@ -40,6 +40,12 @@
             android:fragment="com.evolution.settings.fragments.QuickSettings"
             android:icon="@drawable/ic_settings_quicksettings" />
 
+        <!-- Interface -->
+        <!-- Preference
+            android:key="interface_category"
+            android:title="@string/interface_title"
+            android:icon="@drawable/ic_settings_int" -->
+
         <!-- Power Menu -->
         <Preference
             android:key="powermenu_category"
